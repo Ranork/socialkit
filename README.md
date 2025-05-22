@@ -3,12 +3,40 @@
 # SocialKit - One API to rule them all your social media!
 
 Social kit is a unified API infrastructure for social media built with **nodejs**. Also its a **npm package**.
+
+https://www.npmjs.com/package/socialkit
+
 <br>
 <br>
 
 ## Available Social Media Clients
 
 1. **[Bluesky](#1-bluesky)**: https://bsky.app/ *(made with @atproto/api)*
+
+
+## Installation
+
+### Prerequisites
+- Make sure you have Node.js and npm installed. [Node.js Installation](https://nodejs.org/)
+
+### Installation Steps
+1. Create a new directory
+```bash
+mkdir socialkit-project
+cd socialkit-project
+```
+
+2. Install NPM
+```bash
+npm init -y
+```
+
+3. Install package:
+```bash
+npm install socialkit
+```
+
+
 
 ## 1. Bluesky
 

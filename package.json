@@ -2,15 +2,25 @@
   "type": "module",
   "name": "socialkit",
   "version": "1.0.0",
-  "main": "index.js",
+  "description": "Social kit is a unified API infrastructure for social media",
+  "main": "src/main.js.js",
   "scripts": {
     "start": "node src/main.js",
     "test": "node src/test.js"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "bluesky",
+    "bsky",
+    "social media",
+    "api",
+    "automation"
+  ],
+  "author": "Ranork <ranorkk@gmail.com> (https://github.com/Ranork)",
   "license": "ISC",
-  "description": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Ranork/socialkit"
+  },
   "dependencies": {
     "@atproto/api": "^0.15.8"
   }
