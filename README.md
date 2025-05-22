@@ -40,7 +40,7 @@ npm install socialkit
 
 ## 1. Bluesky
 
-### Creating the client
+### Creating the Bluesky client
 
 First you need to call the client with your account details. Then you need to login.
 
@@ -60,33 +60,24 @@ The client constructor has 3 params:
   new socialkit.BskyClient(username, password, debug = false)
 ```
 
-After this the client is ready to use.
+After this the client is ready to use. Do not forget to login first.
 
-### Client Methods
+### Bluesky Client Methods
+| Method                | Description                                                                                 | Parameters                                                                                    |
+|-----------------------|---------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------|
+| `login()`             | Logs in using the provided username and password.                                           | None                                                                                          |
+| `getTimeline`         | Fetches a timeline of posts from the authenticated account.                                 | `type` (Optional, default: null), `limit` (Optional, default: 10), `includeSelf` (Optional, default: true) |
+| `getProfilePosts`     | Get posts from a specific profile or from the logged-in user.                               | `handle` (Optional), `type` (Optional, default: 'post'), `limit` (Optional, default: 10)      |
+| `getFollows`          | Get a list of users the current user is following.                                          | `handle` (Optional), `limit` (Optional, default: 100)                                         |
+| `getFollowers`        | Get a list of users following the current user.                                             | `handle` (Optional), `limit` (Optional, default: 100)                                         |
+| `getNonMutualFollows` | Get users you follow but who do NOT follow you back.                                        | `limit` (Optional, default: 100)                                                              |
+| `replyToPost`         | Reply to a specific post.                                                                   | `text`, `parentUri`                                                                           |
+| `newPost`             | Creates a new post.                                                                         | `text`, `imageUrls` (Optional, default: [])                                                   |
+| `likePost`            | Like a specific post.                                                                       | `uri`, `cid`                                                                                 |
+| `parseFeedItem`       | Clean and normalize a feed item.                                                            | `item`                                                                                        |
 
-1. **Login**: Necessary to login after implementing the object.
-```js
-  await bskyClient.login()
-```
 
-2. **getTimeline (type = null, limit = 10, includeSelf = true)**: Get the feed posts.
-```js
-  // Available types: post, repost, reply, quote
-  const timeline = await bskyClient.getTimeline('post', 50, false)
-```
-
-3. **getProfilePosts (handle, type = 'post', limit = 10)**: Get the profile posts.
-```js
-  // if the handle is undefined, it gets self posts.
-  const posts = await bskyClient.getProfilePosts(undefined, 'post', 10)
-```
-
-4. **replyToPost (text, parentUri)**: Send reply to a post.
-```js
-  // You can get the uri from feed or profile posts.
-  await bskyClient.replyToPost('Hi!', 'at://did:plc:*****/app.bsky.feed.post/******')
-```
-
+**Note:** Handle is the username like "ranork.bsky.app"
 
 <br>
 <br>
