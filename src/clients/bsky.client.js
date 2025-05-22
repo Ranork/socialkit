@@ -8,34 +8,64 @@ export default class BskyClient {
    * Creates a new instance of BskyClient.
    * @param {string} username The username of the account to log in to.
    * @param {string} password The password of the account to log in to.
-   * @param {string} service The URL of the Bluesky service to use. Defaults to 'https://bsky.social'.
    * @constructor
   */
-  constructor(username, password, service = 'https://bsky.social') {
+  constructor(username, password, debug = false) {
     this.username = username;
     this.password = password;
-    this.service = service;
-    this.agent = new AtpAgent({ service })
+    this.agent = new AtpAgent({ service: 'https://bsky.social' });
+
+    this.debug = debug
   }
 
   async login() {
     await this.agent.login({ identifier: this.username, password: this.password })
+    if (this.debug) console.log(`Logged in as ${this.username}`)
   }
 
   
   //-- Reads
-
-  async getTimeline(type) {
-    const { data } = await this.agent.getTimeline();
-    const feed = data.feed || [];
-    
-    const cleaned = [];
-    for (const item of feed) {
-      const parsed = BskyClient.parseFeedItem(item);
-      if (parsed) cleaned.push(parsed);
+  
+  /**
+   * Fetches a timeline of posts from the authenticated account.
+   * @param {string} [type=null] - If specified, only posts of this type will be returned.
+   * @param {number} [limit=10] - The maximum number of posts to return.
+   * @param {boolean} [includeSelf=true] - If false, posts from the authenticated account will be excluded.
+   * @returns {object[]} An array of posts.
+   */
+  async getTimeline(type = null, limit = 10, includeSelf = true) {
+    if (!this.agent.session?.did) {
+      throw new Error("You must be logged in to use getTimeline()");
     }
 
-    return cleaned;
+    const selfDid = this.agent.session.did;
+    let posts = [];
+    let cursor = undefined;
+
+    while (posts.length < limit) {
+      if (this.debug) console.log(`Fetching timeline page (cursor: ${cursor || '-'})`);
+
+      const { data } = await this.agent.getTimeline({ cursor });
+      const feed = data.feed || [];
+      cursor = data.cursor;
+
+      for (const item of feed) {
+        const parsed = BskyClient.parseFeedItem(item);
+
+        if (
+          parsed &&
+          (!type || parsed.type === type) &&
+          (includeSelf || parsed.root.post.author?.did !== selfDid)
+        ) {
+          posts.push(parsed);
+          if (posts.length >= limit) break;
+        }
+      }
+
+      if (!cursor || feed.length === 0) break;
+    }
+
+    return posts;
   }
 
   /**
@@ -46,36 +76,37 @@ export default class BskyClient {
    * @returns {object[]} An array of posts.
   */
   async getProfilePosts(handle, type = 'post', limit = 10) {
-  const actor = handle || this.agent.session?.did;
-  if (!actor) throw new Error('No handle or logged-in user found.');
+    const actor = handle || this.agent.session?.did;
+    if (!actor) throw new Error('No handle or logged-in user found.');
 
-  let posts = [];
-  let cursor = undefined;
+    let posts = [];
+    let cursor = undefined;
 
-  while (posts.length < limit) {
-    const { data } = await this.agent.getAuthorFeed({
-      actor,
-      cursor,
-    });
+    while (posts.length < limit) {
+      if (this.debug) console.log(`Fetching page with cursor ${cursor || '-'} found posts ${posts.length}`);
+      const { data } = await this.agent.getAuthorFeed({
+        actor,
+        cursor,
+      });
 
-    const feed = data.feed || [];
-    cursor = data.cursor;
+      const feed = data.feed || [];
+      cursor = data.cursor;
 
-    // parse + filtrele
-    for (const item of feed) {
-      const parsed = BskyClient.parseFeedItem(item);
-      if (parsed && parsed.type === type) {
-        posts.push(parsed);
-        if (posts.length >= limit) break;
+      // parse + filtrele
+      for (const item of feed) {
+        const parsed = BskyClient.parseFeedItem(item);
+        if (parsed && parsed.type === type) {
+          posts.push(parsed);
+          if (posts.length >= limit) break;
+        }
       }
+
+      // Eğer daha fazla sayfa yoksa çık
+      if (!cursor || feed.length === 0) break;
     }
 
-    // Eğer daha fazla sayfa yoksa çık
-    if (!cursor || feed.length === 0) break;
+    return posts;
   }
-
-  return posts;
-}
 
 
   //-- Events
