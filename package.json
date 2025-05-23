@@ -1,7 +1,7 @@
 {
   "type": "module",
   "name": "socialkit",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Social kit is a unified API infrastructure for social media",
   "main": "src/main.js.js",
   "scripts": {
@@ -22,7 +22,8 @@
     "url": "https://github.com/Ranork/socialkit"
   },
   "dependencies": {
-    "@atproto/api": "^0.15.8"
+    "@atproto/api": "^0.15.8",
+    "axios": "^1.9.0",
+    "qs": "^6.14.0"
   }
 }
-

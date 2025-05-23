@@ -56,28 +56,59 @@ The client constructor has 3 params:
 2. The password
 3. Debug mode (default: false): It's a switch to open debug console logs.
 
-```js
-  new socialkit.BskyClient(username, password, debug = false)
-```
-
-After this the client is ready to use. Do not forget to login first.
+**Note:** After this the client is ready to use. Do not forget to login first.
 
 ### Bluesky Client Methods
 | Method                | Description                                                                                 | Parameters                                                                                    |
 |-----------------------|---------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------|
 | `login()`             | Logs in using the provided username and password.                                           | None                                                                                          |
-| `getTimeline`         | Fetches a timeline of posts from the authenticated account.                                 | `type` (Optional, default: null), `limit` (Optional, default: 10), `includeSelf` (Optional, default: true) |
-| `getProfilePosts`     | Get posts from a specific profile or from the logged-in user.                               | `handle` (Optional), `type` (Optional, default: 'post'), `limit` (Optional, default: 10)      |
-| `getFollows`          | Get a list of users the current user is following.                                          | `handle` (Optional), `limit` (Optional, default: 100)                                         |
-| `getFollowers`        | Get a list of users following the current user.                                             | `handle` (Optional), `limit` (Optional, default: 100)                                         |
-| `getNonMutualFollows` | Get users you follow but who do NOT follow you back.                                        | `limit` (Optional, default: 100)                                                              |
+| `getTimeline`         | Fetches a timeline of posts from the authenticated account.                                 | `type` (default: null), `limit` (default: 10), `includeSelf` (default: true) |
+| `getProfilePosts`     | Get posts from a specific profile or from the logged-in user.                               | `handle` (Optional), `type` (default: 'post'), `limit` (default: 10)     |
+| `getFollows`          | Get a list of users the current user is following.                                          | `handle` (Optional), `limit` (default: 100)                                         |
+| `getFollowers`        | Get a list of users following the current user.                                             | `handle` (Optional), `limit` (default: 100)                                         |
+| `getNonMutualFollows` | Get users you follow but who do NOT follow you back.                                        | `limit` (default: 100)                                                              |
 | `replyToPost`         | Reply to a specific post.                                                                   | `text`, `parentUri`                                                                           |
-| `newPost`             | Creates a new post.                                                                         | `text`, `imageUrls` (Optional, default: [])                                                   |
+| `newPost`             | Creates a new post.                                                                         | `text`, `imageUrls` (default: [])                                                   |
 | `likePost`            | Like a specific post.                                                                       | `uri`, `cid`                                                                                 |
 | `parseFeedItem`       | Clean and normalize a feed item.                                                            | `item`                                                                                        |
 
 
 **Note:** Handle is the username like "ranork.bsky.app"
+
+<br>
+
+## 2. Reddit
+
+### Creating the Reddit client
+
+First you need to call the client with your account details. Then you need to login.
+
+```js
+  import socialkit from 'socialkit'
+
+  const redditClient = new socialkit.RedditClient('client-id', 'client-secret', 'your-username', 'your-password')
+  await redditClient.login()
+```
+
+The client constructor has 3 params:
+1. The client id from your app in reddit apps. (https://www.reddit.com/prefs/apps)
+2. The client secret from your app in reddit apps. (https://www.reddit.com/prefs/apps)
+3. The username
+4. The password
+5. Debug mode (default: false): It's a switch to open debug console logs.
+
+**Note:** After this the client is ready to use. Do not forget to login first.
+
+### Reddit Client Methods
+| Method                | Description                                                                                     | Parameters                                                                                     |
+|-----------------------|-------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------|
+| `login()`             | Logs in using the provided client credentials and Reddit username/password.                     | None                                                                                           |
+| `getHomeFeed`         | Fetches the home feed for the logged-in user.                                                   | `limit` (default: 10), `sort` (default: 'best', options: 'best', 'hot', 'new')                 |
+| `getSubredditFeed`    | Fetches posts from a specific subreddit with optional sorting.                                  | `subreddit` (required), `limit` (default: 10), `sort` (default: 'hot', options: 'hot', 'top', 'new', 'controversial') |
+| `getUserProfile`      | Fetches the logged-in user's Reddit profile information.                                        | None                                                                                           |
+| `parseFeedItem`       | Static method that normalizes and extracts information from a feed item.                | `item` (Reddit API post object)                                                               |
+
+
 
 <br>
 <br>
