@@ -1,7 +1,7 @@
 {
   "type": "module",
   "name": "socialkit",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Social kit is a unified API infrastructure for social media",
   "main": "src/main.js.js",
   "scripts": {
@@ -11,6 +11,7 @@
   "keywords": [
     "bluesky",
     "bsky",
+    "reddit",
     "social media",
     "api",
     "automation"

@@ -12,6 +12,7 @@ https://www.npmjs.com/package/socialkit
 ## Available Social Media Clients
 
 1. **[Bluesky](#1-bluesky)**: https://bsky.app/ *(made with @atproto/api)*
+2. **[Reddit](#2-reddit)**: https://reddit.com/ *(made with official api/axios)*
 
 
 ## Installation
