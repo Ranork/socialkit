@@ -1,9 +1,9 @@
 {
   "type": "module",
   "name": "socialkit",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Social kit is a unified API infrastructure for social media",
-  "main": "src/main.js.js",
+  "main": "src/main.js",
   "scripts": {
     "start": "node src/main.js",
     "test": "node src/test.js"
