@@ -63,14 +63,15 @@ The client constructor has 3 params:
 | Method                | Description                                                                                 | Parameters                                                                                    |
 |-----------------------|---------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------|
 | `login()`             | Logs in using the provided username and password.                                           | None                                                                                          |
-| `getTimeline`         | Fetches a timeline of posts from the authenticated account.                                 | `type` (default: null), `limit` (default: 10), `includeSelf` (default: true) |
-| `getProfilePosts`     | Get posts from a specific profile or from the logged-in user.                               | `handle` (Optional), `type` (default: 'post'), `limit` (default: 10)     |
-| `getFollows`          | Get a list of users the current user is following.                                          | `handle` (Optional), `limit` (default: 100)                                         |
-| `getFollowers`        | Get a list of users following the current user.                                             | `handle` (Optional), `limit` (default: 100)                                         |
-| `getNonMutualFollows` | Get users you follow but who do NOT follow you back.                                        | `limit` (default: 100)                                                              |
+| `getTimeline`         | Fetches a timeline of posts from the authenticated account.                                 | `type` (default: null), `limit` (default: 10), `includeSelf` (default: true)                  |
+| `getProfile`          | Fetch detailed profile info for the given handle or the logged-in user.                     | `handle` (Optional)                                                                           |
+| `getProfilePosts`     | Get posts from a specific profile or from the logged-in user.                               | `handle` (Optional), `type` (default: 'post'), `limit` (default: 10)                          |
+| `getFollows`          | Get a list of users the current user is following.                                          | `handle` (Optional), `limit` (default: 100)                                                   |
+| `getFollowers`        | Get a list of users following the current user.                                             | `handle` (Optional), `limit` (default: 100)                                                   |
+| `getNonMutualFollows` | Get users you follow but who do NOT follow you back.                                        | `limit` (default: 100)                                                                        |
 | `replyToPost`         | Reply to a specific post.                                                                   | `text`, `parentUri`                                                                           |
-| `newPost`             | Creates a new post.                                                                         | `text`, `imageUrls` (default: [])                                                   |
-| `likePost`            | Like a specific post.                                                                       | `uri`, `cid`                                                                                 |
+| `newPost`             | Creates a new post.                                                                         | `text`, `imageUrls` (default: [])                                                             |
+| `likePost`            | Like a specific post.                                                                       | `uri`, `cid`                                                                                  |
 | `parseFeedItem`       | Clean and normalize a feed item.                                                            | `item`                                                                                        |
 
 

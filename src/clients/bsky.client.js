@@ -117,6 +117,34 @@ export default class BskyClient {
   //* Users
 
   /**
+   * Get profile information for a user.
+   * @param {string} handle - (Optional) The handle or DID of the user. Defaults to the logged-in user.
+   * @returns {object} Profile information of the user.
+   */
+  async getProfile(handle) {
+    const actor = handle || this.agent.session?.did;
+    if (!actor) throw new Error('No handle or logged-in user found.');
+
+    if (this.debug) console.log(`Fetching profile for ${actor}`);
+
+    const { data } = await this.agent.getProfile({ actor });
+
+    return {
+      did: data.did,
+      handle: data.handle,
+      displayName: data.displayName,
+      description: data.description,
+      avatar: data.avatar,
+      banner: data.banner,
+      followersCount: data.followersCount,
+      followsCount: data.followsCount,
+      postsCount: data.postsCount,
+      webUrl: `https://bsky.app/profile/${data.handle}`,
+    };
+  }
+
+
+  /**
    * Search for users by query string.
    * @param {string} query - The search term (e.g., username, display name).
    * @param {number} limit - Max number of results to return.
