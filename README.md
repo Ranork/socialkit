@@ -7,7 +7,6 @@ Social kit is a unified API infrastructure for social media built with **nodejs*
 https://www.npmjs.com/package/socialkit
 
 <br>
-<br>
 
 ## Available Social Media Clients
 
