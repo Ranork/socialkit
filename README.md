@@ -2,7 +2,7 @@
 
 # SocialKit - One API to rule them all your social media!
 
-Social kit is a unified API infrastructure for social media built with **nodejs**. Also its a **npm package**.
+Social kit is a unified API infrastructure for social media built with **nodejs**. Also its a **npm package**. The project is under construction and has not yet been completed for all platforms. Wouldn't you like to contribute to the development?
 
 https://www.npmjs.com/package/socialkit
 
